@@ -5,6 +5,7 @@ import { Input } from '../components/Form/Input';
 type SignInFormData = {
   email: string;
   password: string;
+  
 }
 
 export default function SignIn() {
@@ -12,6 +13,7 @@ export default function SignIn() {
   const { register, handleSubmit, formState } = useForm();
 
   const { errors } = formState;
+  console.log(errors)
 
   const handleSignIn: SubmitHandler<SignInFormData> = async (values) => {
     await new Promise(resolve => setTimeout(resolve, 2000));
@@ -36,11 +38,32 @@ export default function SignIn() {
         onSubmit={handleSubmit(handleSignIn)}
       >
         <Stack spacing="4">
-          <Input type="email" name="email" label="Email" {...register("email")} />
-          <Input type="password" name="password" label="Senha" {...register("password")} />
+          <Input 
+            type="email" 
+            name="email" 
+            label="Email" 
+            error={errors.email}
+            {...register('email', { required: 'Email obrigatório '})} 
+          />
+
+          <Input 
+            type="password" 
+            name="password" 
+            label="Senha" 
+            {...register("password")} 
+          />
+
         </Stack>
 
-        <Button type="submit" mt="6" colorScheme="pink" size="lg" isLoading={formState.isSubmitting}>Entrar</Button>
+        <Button 
+          type="submit" 
+          mt="6" 
+          colorScheme="pink" 
+          size="lg" 
+          isLoading={formState.isSubmitting}
+        >
+          Entrar
+        </Button>
 
       </Flex>
     </Flex>
